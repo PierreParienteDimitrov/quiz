@@ -9,6 +9,7 @@ var countDown = document.querySelector("#countdown");
 var userNameDiv = document.querySelector("#username-div");
 var userName = document.querySelector("#username");
 var submitBtn = document.querySelector("#submit-btn");
+var restartGameBtn = document.querySelector("#restart-game");
 
 // global variables
 
@@ -49,19 +50,29 @@ var questions = [
 
 var highScores = [];
 
-var secondsLeft = 10;
+var secondsLeft = 20;
 var score = 0;
 var index = 0;
 var button;
 var nextBtn = true;
 
-// functions
-
+// function start Game
 function startGame() {
   introDiv.classList.add("hide-div");
   startTimer();
   displayQuestions();
 }
+
+// // function restart game
+// function restartGame(){
+//     score = 0
+//     index = 0
+//     secondsLeft = 10
+//     nextBtn = true
+//     userNameDiv.innerHTML = ""
+//     startTimer()
+//     displayQuestions()
+// }
 
 function displayQuestions() {
   if (index < questions.length) {
@@ -122,13 +133,12 @@ function nextButton() {
       nextDiv.innerHTML = "";
       displayQuestions();
     });
-  } else {
-    endGame();
   }
 }
 
 // end game
 function endGame() {
+  resultScreen.innerHTML = "";
   questionsDiv.innerHTML = "";
   resultDiv.innerHTML = "";
   nextDiv.innerHTML = "";
@@ -141,15 +151,14 @@ function endGame() {
 }
 
 // store score
-
-function storeScore(event){
-    event.preventDefault()
-    var userInput = userName.value 
-    var userScore = score
-    highScores.push({
-        name: userInput,
-        score: userScore,
-    })
+function storeScore(event) {
+  event.preventDefault();
+  var userInput = userName.value;
+  var userScore = score;
+  highScores.push({
+    name: userInput,
+    score: userScore,
+  });
 }
 
 // start timer
@@ -168,6 +177,5 @@ function startTimer() {
 }
 
 // on click events
-
 startQuiz.addEventListener("click", startGame);
-submitBtn.addEventListener("click", storeScore)
+submitBtn.addEventListener("click", storeScore);
