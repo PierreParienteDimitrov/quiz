@@ -10,6 +10,7 @@ var userNameDiv = document.querySelector("#username-div");
 var userName = document.querySelector("#username");
 var submitBtn = document.querySelector("#submit-btn");
 var restartGameBtn = document.querySelector("#restart-game");
+var highestScore = document.querySelector("#highest-score")
 
 // global variables
 
@@ -159,7 +160,28 @@ function storeScore(event) {
     name: userInput,
     score: userScore,
   });
+  localStorage.setItem("highScores", JSON.stringify(highScores))
+  displayScore()
 }
+
+// display highest score function
+function displayScore(){
+    var jsonString = localStorage.getItem("highScores")
+    var retrievedObject = JSON.parse(jsonString)
+
+    // for(let i = 0; i < highScores.length ; i++) {
+    //     if(highScores[i].score > highScores[i+1].score) {
+    //         highScores.textContent = highScores[i].score
+    //     } else {
+    //         highScores.textContent = highScores[i+1].score
+    //     }
+    // }
+    var displayedScore = highScores[0].score
+    var displayedUser = highScores[0].name
+    highestScore.textContent = " " + displayedUser + " has the highest score of " + displayedScore
+}
+
+// displayScore()
 
 // start timer
 function startTimer() {
