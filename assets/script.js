@@ -41,6 +41,8 @@ var score = 0
 
 var index = -1
 
+var button
+
 
 
 
@@ -64,24 +66,31 @@ function displayQuestions() {
 
     // display four buttons and store content as data-attribute
     for ( i = 0 ; i < questions[index].answers.length ; i++) {
-        var button = document.createElement('button')
+        button = document.createElement('button')
         btnData = questions[index].answers[i]
         button.textContent = btnData
         questionsDiv.appendChild(button)
         button.classList.add('btn-display')
         button.setAttribute('id', btnData)
     }
+    
     questionsDiv.addEventListener('click', buttonClicked)
 }
 
 function buttonClicked(event){
-
     nextButton()
 
     if(event.target.matches('button')) {
         var result = document.createElement('h4')
         resultDiv.appendChild(result)
         var currentButton = event.target.id
+        var btnArray = document.querySelectorAll('.btn-display')
+        
+        for( i = 0 ; i < btnArray.length ; i++) {
+            btnArray[i].disabled = true
+        }
+
+
         if(currentButton === questions[index].correctAnswer) {
             result.textContent = "Good answer"
             score ++
