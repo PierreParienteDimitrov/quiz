@@ -20,3 +20,7 @@
     margin: 30px 5px;
     color: white;
 }
+
+.hide {
+    display: none;
+}

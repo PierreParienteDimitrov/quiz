@@ -6,6 +6,9 @@ var resultDiv = document.querySelector("#result-div");
 var nextDiv = document.querySelector("#next-div");
 var resultScreen = document.querySelector("#result-screen");
 var countDown = document.querySelector("#countdown");
+var userNameDiv = document.querySelector("#username-div");
+var userName = document.querySelector("#username");
+var submitBtn = document.querySelector("#submit-btn");
 
 // global variables
 
@@ -43,6 +46,8 @@ var questions = [
     correctAnswer: "console.log",
   },
 ];
+
+var highScores = [];
 
 var secondsLeft = 10;
 var score = 0;
@@ -130,8 +135,24 @@ function endGame() {
   var result = document.createElement("h3");
   result.textContent = "Your total score is " + score;
   resultScreen.appendChild(result);
+  userNameDiv.classList.remove("hide");
+  userName.classList.remove("hide");
+  submitBtn.classList.remove("hide");
 }
 
+// store score
+
+function storeScore(event){
+    event.preventDefault()
+    var userInput = userName.value 
+    var userScore = score
+    highScores.push({
+        name: userInput,
+        score: userScore,
+    })
+}
+
+// start timer
 function startTimer() {
   var timerInterval = setInterval(function () {
     secondsLeft--;
@@ -146,8 +167,7 @@ function startTimer() {
   }, 1000);
 }
 
-// function that monitors the click on the answer and displays the next question
-
 // on click events
 
 startQuiz.addEventListener("click", startGame);
+submitBtn.addEventListener("click", storeScore)
