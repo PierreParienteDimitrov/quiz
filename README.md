@@ -1,7 +1,13 @@
 # COMMENTS
-NOT FINISHED, WILL FINISH BY THURSDAY 30TH
+I created a quiz that asks user questions. 
 
-THANK YOU FOR YOUR UNDERSTANDING
+If user answer is wrong, then the timer decreases by 10 seconds. 
+
+The quiz ends when user finishes to answer all questions or when time is done. 
+
+I aks the user to input his username and store it, with its score, to local storage. 
+
+I display the username and the score. 
 
 # URLS
 
