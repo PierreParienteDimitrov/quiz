@@ -5,6 +5,7 @@ var introDiv = document.querySelector(".intro-div");
 var resultDiv = document.querySelector("#result-div");
 var nextDiv = document.querySelector("#next-div");
 var resultScreen = document.querySelector("#result-screen");
+var countDown = document.querySelector("#countdown");
 
 // global variables
 
@@ -43,10 +44,11 @@ var questions = [
   },
 ];
 
-var secondsLeft = 75;
+var secondsLeft = 10;
 var score = 0;
 var index = 0;
 var button;
+var nextBtn = true;
 
 // functions
 
@@ -57,16 +59,11 @@ function startGame() {
 }
 
 function displayQuestions() {
-  
-
-//   var currentQuestion = document.createElement("h3");
-//   currentQuestion.textContent = questions[index].question;
-//   questionsDiv.appendChild(currentQuestion);
-
   if (index < questions.length) {
     var currentQuestion = document.createElement("h3");
     currentQuestion.textContent = questions[index].question;
     questionsDiv.appendChild(currentQuestion);
+
     for (let i = 0; i < questions[index].answers.length; i++) {
       button = document.createElement("button");
       btnData = questions[index].answers[i];
@@ -82,6 +79,7 @@ function displayQuestions() {
   }
 }
 
+// answer buttons
 function buttonClicked(event) {
   nextButton();
 
@@ -100,25 +98,35 @@ function buttonClicked(event) {
       score++;
     } else {
       result.textContent = "Wrong answer";
+      secondsLeft -= 10;
     }
   }
 }
 
+// next button
 function nextButton() {
-  var nextBtn = document.createElement("button");
-  nextBtn.textContent = "Next ▶";
-  nextBtn.setAttribute("class", "next");
-  nextDiv.appendChild(nextBtn);
+  if (nextBtn) {
+    nextBtn = document.createElement("button");
+    nextBtn.textContent = "Next ▶";
+    nextBtn.setAttribute("class", "next");
+    nextDiv.appendChild(nextBtn);
 
-  nextBtn.addEventListener("click", function () {
-    questionsDiv.innerHTML = "";
-    resultDiv.innerHTML = "";
-    nextDiv.innerHTML = "";
-    displayQuestions();
-  });
+    nextBtn.addEventListener("click", function () {
+      questionsDiv.innerHTML = "";
+      resultDiv.innerHTML = "";
+      nextDiv.innerHTML = "";
+      displayQuestions();
+    });
+  } else {
+    endGame();
+  }
 }
 
+// end game
 function endGame() {
+  questionsDiv.innerHTML = "";
+  resultDiv.innerHTML = "";
+  nextDiv.innerHTML = "";
   var result = document.createElement("h3");
   result.textContent = "Your total score is " + score;
   resultScreen.appendChild(result);
@@ -127,11 +135,12 @@ function endGame() {
 function startTimer() {
   var timerInterval = setInterval(function () {
     secondsLeft--;
-    var countDown = document.querySelector("#countdown");
     countDown.textContent = secondsLeft;
 
-    if (secondsLeft === 0) {
+    if (secondsLeft <= 0) {
       clearInterval(timerInterval);
+      countDown.textContent = "You ran out of time!";
+      nextBtn = false;
       endGame();
     }
   }, 1000);
@@ -142,4 +151,3 @@ function startTimer() {
 // on click events
 
 startQuiz.addEventListener("click", startGame);
-
