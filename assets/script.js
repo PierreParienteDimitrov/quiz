@@ -10,7 +10,7 @@ var userNameDiv = document.querySelector("#username-div");
 var userName = document.querySelector("#username");
 var submitBtn = document.querySelector("#submit-btn");
 var restartGameBtn = document.querySelector("#restart-game");
-var highestScore = document.querySelector("#highest-score")
+var highestScore = document.querySelector("#highest-score");
 
 // global variables
 
@@ -54,7 +54,6 @@ var highScores = [];
 var secondsLeft = 20;
 var score = 0;
 var index = 0;
-var button;
 var nextBtn = true;
 
 // function start Game
@@ -64,18 +63,8 @@ function startGame() {
   displayQuestions();
 }
 
-// // function restart game
-// function restartGame(){
-//     score = 0
-//     index = 0
-//     secondsLeft = 10
-//     nextBtn = true
-//     userNameDiv.innerHTML = ""
-//     startTimer()
-//     displayQuestions()
-// }
-
 function displayQuestions() {
+  var button;
   if (index < questions.length) {
     var currentQuestion = document.createElement("h3");
     currentQuestion.textContent = questions[index].question;
@@ -149,6 +138,22 @@ function endGame() {
   userNameDiv.classList.remove("hide");
   userName.classList.remove("hide");
   submitBtn.classList.remove("hide");
+  restartGameBtn.classList.remove("hide");
+}
+
+function restartGame(event) {
+  event.preventDefault();
+  secondsLeft = 20;
+  score = 0;
+  index = 0;
+  nextBtn = true;
+  userNameDiv.classList.add("hide");
+  userName.classList.add("hide");
+  submitBtn.classList.add("hide");
+  restartGameBtn.classList.add("hide");
+  resultScreen.innerHTML = ""
+  startTimer();
+  displayQuestions()
 }
 
 // store score
@@ -160,28 +165,27 @@ function storeScore(event) {
     name: userInput,
     score: userScore,
   });
-  localStorage.setItem("highScores", JSON.stringify(highScores))
-  displayScore()
+  localStorage.setItem("highScores", JSON.stringify(highScores));
+  displayScore();
 }
 
 // display highest score function
-function displayScore(){
-    var jsonString = localStorage.getItem("highScores")
-    var retrievedObject = JSON.parse(jsonString)
+function displayScore() {
+  var jsonString = localStorage.getItem("highScores");
+  var retrievedObject = JSON.parse(jsonString);
 
-    // for(let i = 0; i < highScores.length ; i++) {
-    //     if(highScores[i].score > highScores[i+1].score) {
-    //         highScores.textContent = highScores[i].score
-    //     } else {
-    //         highScores.textContent = highScores[i+1].score
-    //     }
-    // }
-    var displayedScore = highScores[0].score
-    var displayedUser = highScores[0].name
-    highestScore.textContent = " " + displayedUser + " has the highest score of " + displayedScore
+  // for(let i = 0; i < highScores.length ; i++) {
+  //     if(highScores[i].score > highScores[i+1].score) {
+  //         highScores.textContent = highScores[i].score
+  //     } else {
+  //         highScores.textContent = highScores[i+1].score
+  //     }
+  // }
+  var displayedScore = highScores[0].score;
+  var displayedUser = highScores[0].name;
+  highestScore.textContent =
+    " " + displayedUser + " has the highest score of " + displayedScore;
 }
-
-// displayScore()
 
 // start timer
 function startTimer() {
@@ -201,3 +205,4 @@ function startTimer() {
 // on click events
 startQuiz.addEventListener("click", startGame);
 submitBtn.addEventListener("click", storeScore);
+restartGameBtn.addEventListener("click", restartGame);
