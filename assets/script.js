@@ -2,6 +2,8 @@
 var startQuiz = document.querySelector('#start-quiz')
 var questionsDiv = document.querySelector('#questions-div')
 var introDiv = document.querySelector('.intro-div')
+var resultDiv = document.querySelector('#result-div')
+var nextDiv = document.querySelector('#next-div')
 
 // global variables
 
@@ -35,6 +37,10 @@ var questions = [
 
 var secondsLeft = 10
 
+var score = 0
+
+var index = -1
+
 
 
 
@@ -48,16 +54,18 @@ function startGame() {
 
 function displayQuestions() {
 
+    index++
+
     // get the question and append it to the page
     var currentQuestion = document.createElement('h3')
-    currentQuestion.textContent = questions[0].question
+    currentQuestion.textContent = questions[index].question
     questionsDiv.appendChild(currentQuestion)
 
 
     // display four buttons and store content as data-attribute
-    for ( i = 0 ; i < questions[0].answers.length ; i++) {
+    for ( i = 0 ; i < questions[index].answers.length ; i++) {
         var button = document.createElement('button')
-        btnData = questions[0].answers[i]
+        btnData = questions[index].answers[i]
         button.textContent = btnData
         questionsDiv.appendChild(button)
         button.classList.add('btn-display')
@@ -67,14 +75,29 @@ function displayQuestions() {
 }
 
 function buttonClicked(event){
+
+    nextButton()
+
     if(event.target.matches('button')) {
+        var result = document.createElement('h4')
+        resultDiv.appendChild(result)
         var currentButton = event.target.id
-        if(currentButton === questions[0].correctAnswer) {
-            console.log('this is a good result')
+        if(currentButton === questions[index].correctAnswer) {
+            result.textContent = "Good answer"
+            score ++
         } else {
-            console.log('this is not a good result')
+            result.textContent = "Wrong answer"
         }
     }
+}
+
+function nextButton(){
+    var nextBtn = document.createElement('button')
+    nextBtn.textContent = "Next ▶"
+    nextBtn.setAttribute('class', 'next')
+    nextDiv.appendChild(nextBtn)
+
+    nextBtn.addEventListener('click', displayQuestions)
 }
 
 
