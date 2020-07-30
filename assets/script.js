@@ -35,34 +35,48 @@ var questions = [
 
 var secondsLeft = 10
 
+
+
+
 // functions
 
 function startGame() {
     introDiv.classList.add('hide-div')
-    
     startTimer()
-    displayFunction()
-
+    displayQuestions()
 }
 
-function displayFunction() {
+function displayQuestions() {
+
+    // get the question and append it to the page
     var currentQuestion = document.createElement('h3')
     currentQuestion.textContent = questions[0].question
     questionsDiv.appendChild(currentQuestion)
 
 
-    // display four buttons
-
+    // display four buttons and store content as data-attribute
     for ( i = 0 ; i < questions[0].answers.length ; i++) {
-        var buttons = document.createElement('button')
-        buttons.textContent = questions[0].answers[i]
-        questionsDiv.appendChild(buttons)
-        buttons.classList.add('btn-display')
+        var button = document.createElement('button')
+        btnData = questions[0].answers[i]
+        button.textContent = btnData
+        questionsDiv.appendChild(button)
+        button.classList.add('btn-display')
+        button.setAttribute('id', btnData)
     }
-
-
-
+    questionsDiv.addEventListener('click', buttonClicked)
 }
+
+function buttonClicked(event){
+    if(event.target.matches('button')) {
+        var currentButton = event.target.id
+        if(currentButton === questions[0].correctAnswer) {
+            console.log('this is a good result')
+        } else {
+            console.log('this is not a good result')
+        }
+    }
+}
+
 
 function endGame(){
     console.log('end game')
