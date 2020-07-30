@@ -97,7 +97,12 @@ function nextButton(){
     nextBtn.setAttribute('class', 'next')
     nextDiv.appendChild(nextBtn)
 
-    nextBtn.addEventListener('click', displayQuestions)
+    nextBtn.addEventListener('click', function(){
+       questionsDiv.innerHTML = ""
+       resultDiv.innerHTML = ""
+       nextDiv.innerHTML = ""
+       displayQuestions() 
+    })
 }
 
 
