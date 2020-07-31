@@ -161,10 +161,8 @@ function storeScore(event) {
   event.preventDefault();
   var userInput = userName.value;
   var userScore = score;
-  highScores.push({
-    name: userInput,
-    score: userScore,
-  });
+  highScores.push(userScore);
+  console.log(highScores)
   localStorage.setItem("highScores", JSON.stringify(highScores));
   displayScore();
 }
@@ -173,18 +171,9 @@ function storeScore(event) {
 function displayScore() {
   var jsonString = localStorage.getItem("highScores");
   var retrievedObject = JSON.parse(jsonString);
-
-  // for(let i = 0; i < highScores.length ; i++) {
-  //     if(highScores[i].score > highScores[i+1].score) {
-  //         highScores.textContent = highScores[i].score
-  //     } else {
-  //         highScores.textContent = highScores[i+1].score
-  //     }
-  // }
-  var displayedScore = highScores[0].score;
-  var displayedUser = highScores[0].name;
-  highestScore.textContent =
-    " " + displayedUser + " has the highest score of " + displayedScore;
+  console.log(retrievedObject)
+  var displayedScore = Math.max.apply(null, highScores)
+  highestScore.textContent = " max score is " + displayedScore;
 }
 
 // start timer
