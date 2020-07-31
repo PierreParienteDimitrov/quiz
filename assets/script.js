@@ -173,7 +173,7 @@ function displayScore() {
   var retrievedObject = JSON.parse(jsonString);
   console.log(retrievedObject)
   var displayedScore = Math.max.apply(null, highScores)
-  highestScore.textContent = " max score is " + displayedScore;
+  highestScore.textContent = " " + displayedScore;
 }
 
 // start timer
